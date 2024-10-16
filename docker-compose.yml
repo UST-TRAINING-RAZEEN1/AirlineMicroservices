@@ -1,0 +1,35 @@
+version: '3'
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3003:3003"
+    depends_on:
+      - airline-company-microservice
+      - flight-microservice
+      - passenger-microservice
+
+  airline-company-microservice:
+    build: ./airline-company-microservice
+    depends_on:
+      - mongodb
+
+  flight-microservice:
+    build: ./flight-microservice
+    depends_on:
+      - mongodb
+
+  passenger-microservice:
+    build: ./passenger-microservice
+    depends_on:
+      - mongodb
+
+
+
+  mongodb:
+    image: mongo:4
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  mongodb-data:
